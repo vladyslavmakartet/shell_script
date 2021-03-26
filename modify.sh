@@ -87,8 +87,9 @@ if [ ${#myArray[@]} -eq 0 ]; then
 fi
 # File iterations
 for ptr in "${myArray[@]}"; do
-    if [ $ptr = "-l" ] || [ $ptr = "-u" ] && [ ! -z $sedPattern ];then
-        error_msg "Cannot modify file with sed $sedPattern pattern and $ptr flag at the same time. Type -h to see more info on passing arguments."
+    # check if arguments are passed incorrectly
+    if [ "$ptr" = "-l" ] || [ "$ptr" = "-u" ] && [ ! -z "$sedPattern" ];then
+        error_msg "Cannot modify file with \"$sedPattern\" sed pattern and \"$ptr\" flag at the same time. Type -h to see more info on passing arguments."
     fi
     # if recursion is on, find all occurrances of the file specified (goes into all sub_dirdir)
     if [ $recursion -eq 1 ]; then
