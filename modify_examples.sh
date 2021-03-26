@@ -51,6 +51,7 @@ mkdir -p "modify_example/!@#$%^&*()subfolder8"
 mkdir -p "modify_example/Subfolder9"
 mkdir -p "modify_example/subfolder10/subfolder10_1/subfolder10_2/subfolder10_3/subfolder10_4/subfolder10_5/subfolder10_6/subfolder10_7/very_deep_folder"
 mkdir -p "modify_example/subfolder11/subfolder11/'sub\ folder11/*(@subfolder11"
+mkdir -p "modify_example/Sub folder 12"
 if [ -e "modify_example" ]; then
     echo;echo "New \"modify_example\" folder was successfully created!"
 else
