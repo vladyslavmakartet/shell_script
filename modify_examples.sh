@@ -1,3 +1,4 @@
+# EOPSY LAB1 Vladyslav Makartet 302263
 #!/usr/bin/bash
 # supply name of the tested script, by default considered to be modify.sh
 if [ -z $1 ]; then

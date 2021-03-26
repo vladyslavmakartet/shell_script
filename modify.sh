@@ -1,9 +1,10 @@
+# EOPSY LAB1 Vladyslav Makartet 302263
 #!/usr/bin/bash
 help_usage () {
 	cat <<HELP_USAGE
-
-$0 is a script which is used for modification of filenames such that it is able to lowercase/uppercase,
-or change a filename accoring to provided sed pattern.
+Name:
+          $(basename $0) is a script which is used for modification of filenames such that it is able to lowercase/uppercase
+          or change a filename according to provided sed pattern.
 
 Usage:
           modify [-r] [-l|-u] <dir/file names...>
@@ -16,8 +17,8 @@ Options:
           <sed pattern> pattern(regular expression) with which file name will be modified
 Explanation:
           - the script cannot run with [-l|-u] flags at the same time.
-          - when no flag specified, it is considered to be a <sed pattern>
-          - if no file specified in file path, the script will change all files inside the provided directory
+          - when no -l|-u flag specified, it is considered to be a <sed pattern>
+          - if in file path no filename specified, the script will change all files inside the provided directory (-r flag must be added)
           - if recursion is turned on and provided filename, the script will find all the occurrances of the given filename and change it
 Example:
           modify -u ./example_dir/example.txt
@@ -26,8 +27,8 @@ Example:
                                             => all the files inside example_subfolder will be capitalized
           modify -l ./example_dir/EXAMPLE1.txt ./example_dir/example_dir_two/EXAMPLE2.txt
                                             => file EXAMPLE1.txt and EXAMPLE2.txt will be changed to example1.txt and example2.txt
-          modify s/EXAMPLE/example ./example_dir/sub_dir/
-                                            => all occurrances of EXAMPLE will be changed to example
+          modify -r 's/  */@@@@/g' 'file with many spaces.txt'
+                                            => all occurrances of "file with many spaces.txt" will be changed to "file@@@@with@@@@many@@@@spaces.txt"
 HELP_USAGE
 exit 0
 }
@@ -86,6 +87,9 @@ if [ ${#myArray[@]} -eq 0 ]; then
 fi
 # File iterations
 for ptr in "${myArray[@]}"; do
+    if [ $ptr = "-l" ] || [ $ptr = "-u" ] && [ ! -z $sedPattern ];then
+        error_msg "Cannot modify file with sed $sedPattern pattern and $ptr flag at the same time. Type -h to see more info on passing arguments."
+    fi
     # if recursion is on, find all occurrances of the file specified (goes into all sub_dirdir)
     if [ $recursion -eq 1 ]; then
         find_parameter="find -type f | grep '${ptr}'"
