@@ -1,11 +1,10 @@
+#!/bin/bash
 # EOPSY LAB1 Vladyslav Makartet 302263
-#!/usr/bin/bash
 help_usage () {
 	cat <<HELP_USAGE
 Name:
           $(basename $0) is a script which is used for modification of filenames such that it is able to lowercase/uppercase
           or change a filename according to provided sed pattern.
-
 Usage:
           modify [-r] [-l|-u] <dir/file names...>
           modify [-r] <sed pattern> <dir/file names...>
@@ -22,7 +21,7 @@ Explanation:
           - if recursion is turned on and provided filename, the script will find all the occurrances of the given filename and change it
 Example:
           modify -u ./example_dir/example.txt
-                                            => file example.txt will be changed to EXAMPLE.txt
+                                            => file example.txt will be changed to EXAMPLE.TXT
           modify -r -u ./example_dir/example_subfolder/
                                             => all the files inside example_subfolder will be capitalized
           modify -l ./example_dir/EXAMPLE1.txt ./example_dir/example_dir_two/EXAMPLE2.txt
@@ -108,25 +107,13 @@ for ptr in "${myArray[@]}"; do
         elif [ ! -z "$sedPattern" ]; then
             newname=$(echo -n "${file_name}" | sed -s "$sedPattern")
         else
-        # otherwise change filename according to the given -l or -u argument
-            name=${file_name%.*} # delete everything after last dot
-            ext=${file_name##*.} # delete everything up to last dot
-
-            if [ "$name" = "$ext" ]; then
-                if [ $lowerCase -eq 1 ]; then
-                    newname=${name,,*} # lowerCase file without extension
+        # otherwise change filename according to the given -l or -u argument            
+ 				if [ $lowerCase -eq 1 ]; then
+                    newname=${file_name,,*} # lowerCase file
                 fi
                 if [ $upperCase -eq 1 ]; then
-                    newname=${name^^*} # upperCase file without extension
-                fi
-            else
-                if [ $lowerCase -eq 1 ]; then
-                    newname=${name,,*}.$ext # lowerCase file with extension
-                fi
-                if [ $upperCase -eq 1 ]; then
-                    newname=${name^^*}.$ext # upperCase file with extension
-                fi
-            fi
+                    newname=${file_name^^*} # upperCase file
+                fi                                                                          
         fi
         # If obtained file with new name already exists do not change it
         if [ "$file_name" != "$newname" ] && [ ! -e "${directory_name}/${newname}" ]; then

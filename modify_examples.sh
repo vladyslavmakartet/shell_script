@@ -1,5 +1,5 @@
+#!/bin/bash
 # EOPSY LAB1 Vladyslav Makartet 302263
-#!/usr/bin/bash
 # supply name of the tested script, by default considered to be modify.sh
 if [ -z $1 ]; then
     script_call="modify.sh"
@@ -71,93 +71,94 @@ for d in ./modify_example/*/ ; do
 done
 echo "Examplary file content of very deep folder!" > "modify_example/subfolder10/subfolder10_1/subfolder10_2/subfolder10_3/subfolder10_4/subfolder10_5/subfolder10_6/subfolder10_7/very_deep_folder/simple_FILE.txt"
 echo "Examplary file content of very deep folder!" > "modify_example/subfolder10/subfolder10_1/subfolder10_2/subfolder10_3/subfolder10_4/subfolder10_5/subfolder10_6/subfolder10_7/very_deep_folder/one_more_simple_file.txt"
+echo "Examplary file content of deep folder!" > "modify_example/subfolder11/subfolder11/'sub\ folder11/*(@subfolder11/one_more_simple_file.txt"
 
 echo;echo
 echo "<========================Test cases========================>"
 echo
 #Test cases
 echo "Test case #1 with displaying help menu!"
-sh ./$script_call -h
+bash ./$script_call -h
 test_message
 echo;echo
 echo "Test case #2 with uppercase, file ./subfolder1/simplefile.txt"
-echo "The file must be changed to SIMPLEFILE.txt"
-sh ./$script_call -u ./modify_example/subfolder1/simplefile.txt
+echo "The file must be changed to SIMPLEFILE.TXT"
+bash ./$script_call -u ./modify_example/subfolder1/simplefile.txt
 test_message
 echo;echo
 echo "Test case #3 with lowercase, file ./subfolder1/SIMPLE_FILE.txt"
 echo "The file must be changed to simple_file.txt"
-sh ./$script_call -l ./modify_example/subfolder1/SIMPLE_FILE.txt
+bash ./$script_call -l ./modify_example/subfolder1/SIMPLE_FILE.txt
 test_message
 echo;echo
 echo "Test case #4 with recursion and uppercase, all the files in ./SUBFOLDER2/"
-echo "All the files must be changed to uppercase and give one warning about overwrite"
-sh ./$script_call -r -u ./modify_example/SUBFOLDER2/
+echo "All the files must be changed to uppercase"
+bash ./$script_call -r -u ./modify_example/SUBFOLDER2/
 test_message
 echo;echo
 echo "Test case #5 with recursion and lowercase, all the files in ./SUBFOLDER2/"
 echo "All the files must be changed to lowercase"
-sh ./$script_call -r -l ./modify_example/SUBFOLDER2/
+bash ./$script_call -r -l ./modify_example/SUBFOLDER2/
 test_message
 echo;echo
 echo "Test case #6 with recursion and one filename, all occurrances of file \"file with no extensions\"" 
 echo "All the occurrances must be changed to uppercase"
-sh ./$script_call -r -u 'file with no extensions'
+bash ./$script_call -r -u 'file with no extensions'
 test_message
 echo;echo
 echo "Test case #7 with recursion and one filename, all occurrances of file \"FILE WITH NO EXTENSIONS\"" 
 echo "All the occurrances must be changed to lowercase"
-sh ./$script_call -r -l 'FILE WITH NO EXTENSIONS'
+bash ./$script_call -r -l 'FILE WITH NO EXTENSIONS'
 test_message
 echo;echo
 echo "Test case #8 with sed pattern, file ./SUBFOLDER2/'file with no extensions'" 
 echo "Substitute all white spaces with ###"
-sh ./$script_call 's/  */###/g' ./modify_example/SUBFOLDER2/'file with no extensions'
+bash ./$script_call 's/  */###/g' ./modify_example/SUBFOLDER2/'file with no extensions'
 test_message
 echo;echo
 echo "Test case #9 with recursion and sed pattern, all occurances of file \"file with many spaces.txt\"" 
 echo "Substitute all white spaces with @@@@"
-sh ./$script_call -r 's/  */@@@@/g' 'file with many spaces.txt'
+bash ./$script_call -r 's/  */@@@@/g' 'file with many spaces.txt'
 test_message
 echo;echo
 echo "Test case #10 with recursion, rename all files to uppercase" 
-echo "Rename all the files in all folders to uppercase, should give warnings about SIMPLE_FILE.txt"
-sh ./$script_call -r -u ./modify_example/
+echo "Rename all the files in all folders to uppercase, must give warning about SIMPLEFILE.txt"
+bash ./$script_call -r -u ./modify_example/
 test_message
 echo;echo
 echo "Test case #11 with recursion, rename all files to lowercase" 
 echo "Rename all the files in all folders to lowercase"
-sh ./$script_call -r -l ./modify_example/
+bash ./$script_call -r -l ./modify_example/
 test_message
 echo;echo
 echo "<========================Test cases which result in error========================>"
 echo;echo
 echo "Test case #12 with -h -l -u flags at the same time"
 echo "The script must output error"
-sh ./$script_call -h -l -u
+bash ./$script_call -h -l -u
 test_message
 echo;echo
 echo "Test case #13 with -h -l flags"
 echo "The script must output error"
-sh ./$script_call -h -l
+bash ./$script_call -h -l
 test_message
 echo;echo
 echo "Test case #14 with -l -u flags"
 echo "The script must output error"
-sh ./$script_call -l -u
+bash ./$script_call -l -u
 test_message
 echo;echo
 echo "Test case #15 with -l -u flags and file"
 echo "The script must output error"
-sh ./$script_call -l -u ./modify_example/subfolder1/simplefile.txt
+bash ./$script_call -l -u ./modify_example/subfolder1/simplefile.txt
 test_message
 echo;echo
 echo "Test case #16 with -l -u flags and sed pattern" 
 echo "The script must output error"
-sh ./$script_call -l -u 's/  */@@@@/g' 
+bash ./$script_call -l -u 's/  */@@@@/g' 
 test_message
 echo;echo
 echo "Test case #17 with -u flag and folder without -r flag" 
 echo "The script must output error"
-sh ./$script_call -u ./modify_example/subfolder1/
+bash ./$script_call -u ./modify_example/subfolder1/
 test_message
