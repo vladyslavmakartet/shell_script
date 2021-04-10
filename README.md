@@ -1,1 +1,1 @@
-Simple script to modify filenames.
+⭐ A simple script to modify filenames. 
